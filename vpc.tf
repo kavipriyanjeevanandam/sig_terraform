@@ -46,12 +46,12 @@ resource "aws_route_table_association" "SIG_subnet_association" {
   route_table_id = aws_route_table.SIG_subnet_rt.id
 }
 
-#  resource "aws_route" "SIG_subnet_to_firewall" {
-#    route_table_id         = aws_route_table.SIG_subnet_rt.id
-#    destination_cidr_block = "0.0.0.0/0"
-#    vpc_endpoint_id        = aws_networkfirewall_firewall.SIG_firewall.firewall_status[0].sync_states[0].attachment[0].endpoint_id
-#    depends_on = [aws_networkfirewall_firewall.SIG_firewall]
-#  }
+ resource "aws_route" "SIG_subnet_to_firewall" {
+   route_table_id         = aws_route_table.SIG_subnet_rt.id
+   destination_cidr_block = "0.0.0.0/0"
+   vpc_endpoint_id        = element([for ss in tolist(aws_networkfirewall_firewall.SIG_firewall.firewall_status[0].sync_states) : ss.attachment[0].endpoint_id if ss.attachment[0].subnet_id == aws_subnet.SIG_subnet.id],0)
+ depends_on = [aws_networkfirewall_firewall.SIG_firewall]
+ }
 
 
 resource "aws_route_table" "SIG_igw_rt" {
@@ -62,12 +62,12 @@ resource "aws_route_table_association" "SIG_igw_rt_association" {
   route_table_id = aws_route_table.SIG_igw_rt.id
 }
 
-# resource "aws_route" "SIG_igw_to_firewall" {
-#   route_table_id         = aws_route_table.SIG_igw_rt.id
-#   destination_cidr_block = "172.17.42.0/27"
-#  vpc_endpoint_id        = aws_networkfirewall_firewall.SIG_firewall.firewall_status[0].sync_states[0].attachment[0].endpoint_id
-#  depends_on = [aws_networkfirewall_firewall.SIG_firewall]
-# }
+resource "aws_route" "SIG_igw_to_firewall" {
+  route_table_id         = aws_route_table.SIG_igw_rt.id
+  destination_cidr_block = "172.17.42.0/27"
+ vpc_endpoint_id        = element([for ss in tolist(aws_networkfirewall_firewall.SIG_firewall.firewall_status[0].sync_states) : ss.attachment[0].endpoint_id if ss.attachment[0].subnet_id == aws_subnet.SIG_subnet.id],0)
+ depends_on = [aws_networkfirewall_firewall.SIG_firewall]
+}
 
 
 resource "aws_route_table" "SIG_firewall_rt" {
