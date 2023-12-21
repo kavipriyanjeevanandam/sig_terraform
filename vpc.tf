@@ -1,7 +1,4 @@
-# Define the AWS provider
-provider "aws" {
-  region = "ap-south-1"
-}
+
 # Create the hub VPC
 resource "aws_vpc" "SIG_vpc" {
   cidr_block = "172.17.42.0/24"
