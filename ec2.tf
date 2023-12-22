@@ -9,8 +9,4 @@ resource "aws_instance" "hub_ec2_instance" {
   tags = {
     Name = "SIG_EC2"
   }
-  
-  lifecycle {
-    ignore_changes = [security_groups]
-  }
 }
