@@ -14,7 +14,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/sandeepkris2001/IAC-Terraform-Jenkins.git'
+                git branch: 'master', url: 'https://github.com/kavipriyanjeevanandam/sig_terraform.git'
             }
         }
         stage('Terraform init') {
