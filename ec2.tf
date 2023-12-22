@@ -7,7 +7,7 @@ resource "aws_instance" "hub_ec2_instance" {
   key_name        = "oskeypair"
   security_groups = [aws_security_group.SIG_vpc_sg.id]
   tags = {
-    Name = "SIG_Hub_management_EC2"
+    Name = "SIG_EC2"
   }
   
   lifecycle {
