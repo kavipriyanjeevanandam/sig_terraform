@@ -2,7 +2,7 @@
 resource "aws_vpn_gateway" "hub_vpn_gateway" {
   vpc_id = aws_vpc.SIG_vpc.id
   tags = {
-    Name = "Hub VPN Gateway"
+    Name = "SIG VPN Gateway"
   }
 }
 
@@ -34,10 +34,4 @@ resource "aws_vpn_connection_route" "ip_prefix" {
   vpn_connection_id      = aws_vpn_connection.hub_to_other_vpc_vpn_connection.id
 }
 
-# Update Route Tables in Hub VPC to route traffic to the VPN Connection
-resource "aws_route" "hub_to_other_vpc_route" {
-  route_table_id         = aws_vpc.SIG_vpc.main_route_table_id #  SIG VPC's main route table
-  destination_cidr_block = "10.0.0.0/16"                       # Destination CIDR block of the other VPC
-  gateway_id             = aws_vpn_gateway.hub_vpn_gateway.id
-}
 
