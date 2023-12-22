@@ -90,4 +90,9 @@ resource "aws_route" "SIG_firewall_to_igw" {
   gateway_id = aws_internet_gateway.SIG_igw.id
 }
 
+resource "aws_route" "SIG_firewall_to_vpg" {
+  route_table_id         = aws_route_table.SIG_firewall_rt.id
+  destination_cidr_block = "10.220.1.0/24"
+  gateway_id = aws_vpn_gateway.hub_vpn_gateway.id
+}
 
