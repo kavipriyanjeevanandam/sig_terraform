@@ -3,7 +3,7 @@
 resource "aws_vpc" "SIG_vpc" {
   cidr_block = "172.17.42.0/24"
   tags = {
-    Name = "SIG_hub"
+    Name = "SIG_vpc"
   }
 }
 
