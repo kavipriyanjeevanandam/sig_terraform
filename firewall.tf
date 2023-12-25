@@ -18,7 +18,7 @@ resource "aws_networkfirewall_rule_group" "SIG_rule_group_1" {
 }
 resource "aws_networkfirewall_rule_group" "SIG_rule_group_2" {
   capacity = 10
-  name     = "deny-ssh"
+  name     = "control-ssh"
   type     = "STATEFUL"
   rule_group {
     rules_source {
